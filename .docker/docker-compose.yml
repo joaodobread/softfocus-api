@@ -13,4 +13,3 @@ services:
             MYSQL_PASSWORD: softfocus
         volumes:
             - ./database:/var/lib/mysql
-            - ../database/schema.sql:/docker-entrypoint-initdb.d/dump.sql
