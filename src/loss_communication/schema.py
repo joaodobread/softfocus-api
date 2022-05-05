@@ -38,7 +38,6 @@ class LossCommunication(BaseModel):
 
     class Config:
         orm_mode = True
-        fields = {"eggs": "_eggs"}
 
 
 class CreateLossCommunication(BaseModel):
@@ -57,3 +56,18 @@ class UpdateLossCommunication(BaseModel):
     location: Point
     harvest_date: datetime
     couse_of_loss: CouseOfLoss
+
+
+class FindLocationConflic(BaseModel):
+    location: Point
+    harvest_date: datetime
+    couse_of_loss: CouseOfLoss
+
+
+class LossCommunicationConflics(BaseModel):
+    id: UUID
+    farmer_name: str
+    location: Json
+
+    class Config:
+        orm_mode = True

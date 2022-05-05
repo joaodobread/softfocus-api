@@ -4,7 +4,13 @@ from sqlalchemy.orm import Session
 from typing import List
 from src.common.jwt_decode import JwtDecoded
 
-from src.loss_communication.schema import CreateLossCommunication, LossCommunication, UpdateLossCommunication
+from src.loss_communication.schema import (
+    CreateLossCommunication,
+    FindLocationConflic,
+    LossCommunication,
+    LossCommunicationConflics,
+    UpdateLossCommunication
+)
 from src.loss_communication.service import make_loss_communication_service
 from src.middlewares.jwt_required import RequiredAuth
 from src.sqlalchemy.database import get_db
@@ -49,3 +55,9 @@ def update(id: UUID,
            ):
     service = make_loss_communication_service(db)
     return service.update(id, payload)
+
+
+@router.post('/find-location-conflict', response_model=List[LossCommunicationConflics], dependencies=[Depends(RequiredAuth())])
+def find_location_conflic(payload: FindLocationConflic, db: Session = Depends(get_db)):
+    service = make_loss_communication_service(db)
+    return service.find_location_conflic(payload)

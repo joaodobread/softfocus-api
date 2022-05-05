@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from src.loss_communication.schema import CreateLossCommunication, UpdateLossCommunication
+from src.loss_communication.schema import CreateLossCommunication, FindLocationConflic, Point, UpdateLossCommunication
 from src.sqlalchemy.models import LossCommunication
 
 
@@ -63,3 +63,23 @@ class LossCommunicationRepository:
         self.db.commit()
 
         return loss_communication
+
+    def find_location_conflic(self, payload: FindLocationConflic):
+        limit_distance = 10000
+        location = payload.location
+        harvest_date = payload.harvest_date
+        couse_of_loss = payload.couse_of_loss
+
+        query = f"""
+            select id as id, lc.farmer_name as farmer_name, lc.location as location, ST_Distance(
+                st_setsrid( st_point( {location["long"]}, {location["lat"]} ) , 4326 ),
+                st_setsrid( lc.location  , 4326 ),
+                true
+            ) as distance from loss_communication lc where ST_Distance(
+                st_setsrid( st_point( {location["long"]}, {location["lat"]} ) , 4326 ),
+                st_setsrid(  lc.location , 4326 ),
+                true
+            ) <= {limit_distance} and date(lc.harvest_date) = '{harvest_date}' and lc.couse_of_loss != '{couse_of_loss}'
+
+        """
+        return self.db.execute(query).fetchall()

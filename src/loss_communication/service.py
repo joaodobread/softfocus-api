@@ -4,7 +4,7 @@ import json
 from plpygis import Geometry
 
 
-from src.loss_communication.schema import CreateLossCommunication, UpdateLossCommunication
+from src.loss_communication.schema import CreateLossCommunication, FindLocationConflic, Point, UpdateLossCommunication
 from .repository import LossCommunicationRepository
 
 
@@ -56,3 +56,12 @@ class LossCommunicationService:
         loss_communication.location = self.binary_location_to_json(
             loss_communication.location)
         return loss_communication
+
+    def find_location_conflic(self, payload: FindLocationConflic):
+        loss_communication = self.repository.find_location_conflic(payload)
+        return [
+            {"id": loss.id,
+             "farmer_name": loss.farmer_name,
+             "location": self.binary_location_to_json(loss.location)
+             } for loss in loss_communication
+        ]
