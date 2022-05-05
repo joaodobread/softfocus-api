@@ -1,23 +1,19 @@
 
 from typing import List
 from uuid import UUID
-from pydantic import BaseModel
-
-from src.schema import LossCommunication
+from pydantic import BaseModel, EmailStr, constr
 
 
 class CreateAnalystsModel(BaseModel):
-    email: str
-    password: str
+    email: EmailStr
+    password: constr(min_length=8)
     name: str
 
 
 class AnalystModel(BaseModel):
     id: UUID
-    is_super: bool
     email: str
     name: str
-    loss_communication: List[LossCommunication] = []
 
     class Config:
         orm_mode = True

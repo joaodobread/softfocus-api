@@ -19,7 +19,7 @@ class AuthService:
     def sign_in(self, email: str, password: str) -> str:
         analyst = self.repository.find_by_email(email)
         if not self.bcrypt.compare_hash(password, analyst.password):
-            raise HTTPException(401, "invalid_access_credentials")
+            raise HTTPException(401, 'invalid_access_credentials')
         token = JwtHandler.sign(
             sub=str(analyst.id),
             email=analyst.email,

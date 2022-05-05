@@ -16,6 +16,9 @@ psycopg2-binary = "^2.9.3"
 bcrypt = "^3.2.2"
 PyJWT = "^2.3.0"
 python-decouple = "^3.6"
+pydantic = {extras = ["email"], version = "^1.9.0"}
+geojson-pydantic = "^0.3.4"
+plpygis = "^0.2.0"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.6.0"

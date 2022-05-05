@@ -20,7 +20,7 @@ class AnalystsService:
     def find_by_email(self, email: str) -> Analysts:
         analyst = self.repository.find_by_email(email)
         if not analyst:
-            raise HTTPException(status.HTTP_404_NOT_FOUND, "analyst_not_found")
+            raise HTTPException(status.HTTP_404_NOT_FOUND, 'analyst_not_found')
         return analyst
 
     def find_all(self) -> List[Analysts]:
@@ -29,6 +29,6 @@ class AnalystsService:
     def create(self, payload: CreateAnalystsModel):
         if self.repository.find_by_email(payload.email):
             raise HTTPException(status.HTTP_409_CONFLICT,
-                                "email_already_exists")
+                                'email_already_exists')
         payload.password = self.bcrypt.hash_password(payload.password)
         return self.repository.create(payload)
