@@ -6,8 +6,10 @@ Create Date: 2022-05-03 21:53:19.901956
 
 """
 from datetime import datetime
+import uuid
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects import postgresql as pg
 
 
 # revision identifiers, used by Alembic.
@@ -20,7 +22,8 @@ depends_on = None
 def upgrade():
     op.create_table(
         'analysts',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', pg.UUID(as_uuid=True),
+                  primary_key=True, default=uuid.uuid4),
         sa.Column('name', sa.String(300), nullable=False),
         sa.Column('email', sa.String(300), nullable=False, unique=True),
         sa.Column('password', sa.String(300), nullable=False),

@@ -6,10 +6,12 @@ Create Date: 2022-05-04 01:06:36.218715
 
 """
 from datetime import datetime
+import uuid
 from email.policy import default
 from alembic import op
 import sqlalchemy as sa
 import geoalchemy2 as g2
+from sqlalchemy.dialects import postgresql as pg
 
 # revision identifiers, used by Alembic.
 revision = '98b931735456'
@@ -21,8 +23,9 @@ depends_on = None
 def upgrade():
     op.create_table(
         'loss_communication',
-        sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('analysts_id', sa.Integer, nullable=False),
+        sa.Column('id', pg.UUID(as_uuid=True),
+                  primary_key=True, default=uuid.uuid4),
+        sa.Column('analysts_id', pg.UUID(as_uuid=True), nullable=False),
         sa.Column('farmer_name', sa.String(300), nullable=False),
         sa.Column('farmer_email', sa.String(300), nullable=False),
         sa.Column('farmer_document', sa.String(20), nullable=False),
