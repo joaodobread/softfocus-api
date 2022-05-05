@@ -1,8 +1,7 @@
 from typing import List
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from src.analysts.schema import CreateAnalystsModel
 
+from src.analysts.schema import CreateAnalystsModel
 from src.sqlalchemy.models import Analysts
 
 

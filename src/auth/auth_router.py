@@ -1,9 +1,7 @@
-from re import L
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+
 from src.auth.service import make_auth_service
-
-
 from src.sqlalchemy.database import get_db
 from . import schema
 

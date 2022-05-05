@@ -1,12 +1,11 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from src.analysts.schema import AnalystModel, CreateAnalystsModel
 from src.analysts.service import make_analyst_service
 from src.middlewares.jwt_required import RequiredAuth
 from src.sqlalchemy.database import get_db
-from src.sqlalchemy.models import Analysts
 
 
 router = APIRouter(prefix="/analysts")
