@@ -10,6 +10,12 @@ class CreateAnalystsModel(BaseModel):
     name: str
 
 
+class CreateAnalystsModelDTO(BaseModel):
+    email: EmailStr
+    password: constr(min_length=8)
+    fullName: str
+
+
 class AnalystModel(BaseModel):
     id: UUID
     email: str

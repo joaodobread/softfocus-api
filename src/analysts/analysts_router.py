@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from src.analysts.schema import AnalystModel, CreateAnalystsModel
+from src.analysts.schema import AnalystModel, CreateAnalystsModel, CreateAnalystsModelDTO
 from src.analysts.service import make_analyst_service
 from src.middlewares.jwt_required import RequiredAuth
 from src.sqlalchemy.database import get_db
@@ -20,6 +20,11 @@ def find_all(db: Session = Depends(get_db)):
 
 
 @router.post('', response_model=AnalystModel)
-def create(payload: CreateAnalystsModel, db: Session = Depends(get_db)):
+def create(payload: CreateAnalystsModelDTO, db: Session = Depends(get_db)):
     service = make_analyst_service(db)
-    return service.create(payload)
+    params = CreateAnalystsModel(
+        email=payload.email,
+        password=payload.password,
+        name=payload.fullName
+    )
+    return service.create(params)
