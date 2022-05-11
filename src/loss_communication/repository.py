@@ -1,3 +1,4 @@
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from src.loss_communication.schema import CreateLossCommunication, FindLocationConflic, Point, UpdateLossCommunication
@@ -10,7 +11,7 @@ class LossCommunicationRepository:
 
     def find_all(self):
         loss_communication = self.db.query(
-            LossCommunication).filter_by(deleted=False).all()
+            LossCommunication).order_by(desc(LossCommunication.created_at)).filter_by(deleted=False).all()
 
         return loss_communication
 
