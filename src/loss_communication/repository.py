@@ -22,7 +22,7 @@ class LossCommunicationRepository:
             farmer_document=payload.farmer_document,
             harvest_date=payload.harvest_date,
             couse_of_loss=payload.couse_of_loss,
-            location=f"POINT({payload.location['long']} {payload.location['lat']})",
+            location=f"POINT({payload.location['lat']} {payload.location['long']})",
         )
         self.db.add(loss_communication)
         self.db.commit()
@@ -55,7 +55,7 @@ class LossCommunicationRepository:
         loss_communication.farmer_name = payload.farmer_name
         loss_communication.farmer_email = payload.farmer_email
         loss_communication.farmer_document = payload.farmer_document
-        loss_communication.location = f"POINT({payload.location['long']} {payload.location['lat']})",
+        loss_communication.location = f"POINT({payload.location['lat']} {payload.location['long']})",
         loss_communication.harvest_date = payload.harvest_date
         loss_communication.couse_of_loss = payload.couse_of_loss
 
@@ -72,11 +72,11 @@ class LossCommunicationRepository:
 
         query = f"""
             select id as id, lc.farmer_name as farmer_name, lc.location as location, ST_Distance(
-                st_setsrid( st_point( {location["long"]}, {location["lat"]} ) , 4326 ),
+                st_setsrid( st_point( {location["lat"]}, {location["long"]} ) , 4326 ),
                 st_setsrid( lc.location  , 4326 ),
                 true
             ) as distance from loss_communication lc where ST_Distance(
-                st_setsrid( st_point( {location["long"]}, {location["lat"]} ) , 4326 ),
+                st_setsrid( st_point( {location["lat"]}, {location["long"]} ) , 4326 ),
                 st_setsrid(  lc.location , 4326 ),
                 true
             ) <= {limit_distance} and date(lc.harvest_date) = '{harvest_date}' and lc.couse_of_loss != '{couse_of_loss}'

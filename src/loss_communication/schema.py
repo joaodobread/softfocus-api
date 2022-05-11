@@ -43,7 +43,7 @@ class LossCommunication(BaseModel):
 class CreateLossCommunication(BaseModel):
     farmer_name: str
     farmer_email: EmailStr
-    farmer_document: constr(regex=r'^\d{3}\.\d{3}\.\d{3}\-\d{2}$')
+    farmer_document: str
     location: Point
     harvest_date: datetime
     couse_of_loss: CouseOfLoss
@@ -52,7 +52,7 @@ class CreateLossCommunication(BaseModel):
 class UpdateLossCommunication(BaseModel):
     farmer_name: str
     farmer_email: EmailStr
-    farmer_document: constr(regex=r'^\d{3}\.\d{3}\.\d{3}\-\d{2}$')
+    farmer_document: str
     location: Point
     harvest_date: datetime
     couse_of_loss: CouseOfLoss
