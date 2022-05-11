@@ -91,4 +91,5 @@ class LossCommunicationRepository:
             ) <= {limit_distance} and date(lc.harvest_date) = date('{harvest_date}') and lc.couse_of_loss != '{couse_of_loss}' and deleted = false
 
         """
+        print(query)
         return self.db.execute(query).fetchall()

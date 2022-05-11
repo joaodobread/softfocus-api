@@ -60,8 +60,13 @@ class LossCommunicationService:
     def find_location_conflic(self, payload: FindLocationConflic):
         loss_communication = self.repository.find_location_conflic(payload)
         return [
-            {"id": loss.id,
-             "farmer_name": loss.farmer_name,
-             "location": self.binary_location_to_json(loss.location)
-             } for loss in loss_communication
+            {
+                "id": loss.id,
+                "farmer_name": loss.farmer_name,
+                "farmer_document": loss.farmer_document,
+                "harvest_date": loss.harvest_date,
+                "couse_of_loss": loss.couse_of_loss,
+                "farmer_email": loss.farmer_email,
+                "location": self.binary_location_to_json(loss.location)
+            } for loss in loss_communication
         ]
