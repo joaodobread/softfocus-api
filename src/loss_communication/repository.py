@@ -74,8 +74,8 @@ class LossCommunicationRepository:
         query = f"""
             select
                 id as id,
-                lc.farmer_name as farmer_name,
                 lc.location as location,
+                lc.farmer_name as farmer_name,
                 lc.farmer_document as farmer_document,
                 lc.harvest_date as harvest_date,
                 lc.couse_of_loss as couse_of_loss,
@@ -91,5 +91,4 @@ class LossCommunicationRepository:
             ) <= {limit_distance} and date(lc.harvest_date) = date('{harvest_date}') and lc.couse_of_loss != '{couse_of_loss}' and deleted = false
 
         """
-        print(query)
         return self.db.execute(query).fetchall()
