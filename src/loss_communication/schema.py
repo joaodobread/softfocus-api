@@ -67,6 +67,10 @@ class FindLocationConflic(BaseModel):
 class LossCommunicationConflics(BaseModel):
     id: UUID
     farmer_name: str
+    farmer_document: str
+    harvest_date: datetime
+    couse_of_loss: CouseOfLoss
+    farmer_email: EmailStr
     location: Json
 
     class Config:

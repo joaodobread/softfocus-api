@@ -72,15 +72,23 @@ class LossCommunicationRepository:
         couse_of_loss = payload.couse_of_loss
 
         query = f"""
-            select id as id, lc.farmer_name as farmer_name, lc.location as location, ST_Distance(
-                st_setsrid( st_point( {location["lat"]}, {location["long"]} ) , 4326 ),
-                st_setsrid( lc.location  , 4326 ),
+            select
+                id as id,
+                lc.farmer_name as farmer_name,
+                lc.location as location,
+                lc.farmer_document as farmer_document,
+                lc.harvest_date as harvest_date,
+                lc.couse_of_loss as couse_of_loss,
+                lc.farmer_email as farmer_email,
+                ST_Distance(
+                    st_setsrid( st_point( {location["lat"]}, {location["long"]} ) , 4326 ),
+                    st_setsrid( lc.location  , 4326 ),
                 true
             ) as distance from loss_communication lc where ST_Distance(
                 st_setsrid( st_point( {location["lat"]}, {location["long"]} ) , 4326 ),
                 st_setsrid(  lc.location , 4326 ),
                 true
-            ) <= {limit_distance} and date(lc.harvest_date) = date('{harvest_date}') and lc.couse_of_loss != '{couse_of_loss}'
+            ) <= {limit_distance} and date(lc.harvest_date) = date('{harvest_date}') and lc.couse_of_loss != '{couse_of_loss}' and deleted = false
 
         """
         return self.db.execute(query).fetchall()
