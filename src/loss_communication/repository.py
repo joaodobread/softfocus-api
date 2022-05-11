@@ -80,7 +80,7 @@ class LossCommunicationRepository:
                 st_setsrid( st_point( {location["lat"]}, {location["long"]} ) , 4326 ),
                 st_setsrid(  lc.location , 4326 ),
                 true
-            ) <= {limit_distance} and date(lc.harvest_date) = '{harvest_date}' and lc.couse_of_loss != '{couse_of_loss}'
+            ) <= {limit_distance} and date(lc.harvest_date) = date('{harvest_date}') and lc.couse_of_loss != '{couse_of_loss}'
 
         """
         return self.db.execute(query).fetchall()
