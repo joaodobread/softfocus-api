@@ -1,3 +1,4 @@
+from urllib import response
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
@@ -92,3 +93,7 @@ class LossCommunicationRepository:
 
         """
         return self.db.execute(query).fetchall()
+
+    def __del__(self):
+        self.db.close()
+        self.db.close_all()

@@ -25,3 +25,7 @@ class AnalystsRepository:
         self.db.commit()
         self.db.refresh(analyst)
         return analyst
+
+    def __del__(self):
+        self.db.close()
+        self.db.close_all()
