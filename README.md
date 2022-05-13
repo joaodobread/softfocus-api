@@ -1,20 +1,50 @@
-> poetry run alembic upgrade heads
+# Softfocus - Loss Communication API
 
-> poetry run alembic revision -m "loss_communication"
+## Requirements
 
-> uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+-   Python 3.x [see](https://www.python.org/)
+-   Poetry [see](https://www.python.org/)
+-   Docker [see](https://www.docker.com/)
 
-> poetry run alembic downgrade -1
+## Running the project
 
-ADDING A MIDDLEWARE
-```python
-def verify_token(authorization: str = Header(...)):
-    print(authorization)
-    return authorization
+First is required to run the database, which can be done with Docker or any actual instance of Postgres.
 
+### Database
 
-@router.post("/sign-in", response_model=schema.AccessToken, dependencies=[Depends(verify_token)])
+```sh
+docker-compose up --build -d
 ```
 
-$2b$12$gAe9jQmg8ID5OnzwZuxA7.bPhBbNe6KFCOkuLEDqitWw842kFDGKC -> 123
+### Poetry Shell
 
+After that run activates the poetry shell.
+
+```sh
+poetry shell
+```
+
+### Running Migrations
+
+Change the file `alembic.ini`. Set the variable `sqlalchemy.url` to the actual URL of your database.
+Eg: `postgresql://example:example@localhost:5432/example`
+
+```sh
+poetry run alembic upgrade heads
+```
+
+### Running the API
+
+```sh
+uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### Docs
+
+Two types of Documentation are available. One was provided from Redoc and the other from Swagger.
+
+Redoc: `<host>:<port>/redoc`
+
+Swagger:`<host>:<port>/docs`
+
+Have fun.
