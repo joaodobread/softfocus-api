@@ -24,6 +24,14 @@ After that run activates the poetry shell.
 poetry shell
 ```
 
+### Dependencies
+
+Install all deps.
+
+```sh
+poetry install
+```
+
 ### Running Migrations
 
 Change the file `alembic.ini`. Set the variable `sqlalchemy.url` to the actual URL of your database.
